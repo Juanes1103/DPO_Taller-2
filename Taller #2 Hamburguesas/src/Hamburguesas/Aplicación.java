@@ -4,14 +4,13 @@ import java.util.Scanner;
 
 public class Aplicación {
 
-	public static void main(String[] args) {
+	public void main(String[] args) {
 	
 		ejecutarOpcion();
 		
-		
 	}
 	
-	public static void mostrarMenu() {
+	public void mostrarMenu() {
 		
 		System.out.println("Bienvenido al restaurante");
 		System.out.println("Seleccione la opcion de su gusto");
@@ -23,7 +22,7 @@ public class Aplicación {
 		
 	}
 	
-	public static void ejecutarOpcion(){
+	public void ejecutarOpcion(){
 		
 		boolean continuar = true;
 		while(continuar)
