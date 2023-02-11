@@ -1,4 +1,4 @@
-package Hamburguesas;
+package consola;
 
 import java.util.Scanner;
 
