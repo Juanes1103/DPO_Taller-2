@@ -2,6 +2,9 @@ package Hamburguesas;
 
 import java.util.Scanner;
 
+import Hamburguesas.Restaurante;
+
+
 public class Aplicación {
 
 	public void main(String[] args) {

@@ -1,5 +1,7 @@
 package Hamburguesas;
 
+import Hamburguesas.Producto;
+
 public class ProductoMenu {
 	
 	//Atributos

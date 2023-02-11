@@ -1,6 +1,7 @@
 package Hamburguesas;
 
 import java.io.File;
+import Hamburguesas.Producto;
 
 public class Pedido {
 	

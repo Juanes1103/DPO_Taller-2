@@ -3,6 +3,11 @@ package Hamburguesas;
 import java.io.File;
 import java.util.ArrayList;
 
+import Hamburguesas.Ingrediente;
+import Hamburguesas.ProductoMenu;
+import Hamburguesas.Pedido;
+import Hamburguesas.Combo;
+
 public class Restaurante {
 	
 	//Métodos

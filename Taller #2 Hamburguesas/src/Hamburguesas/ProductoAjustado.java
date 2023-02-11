@@ -1,5 +1,9 @@
 package Hamburguesas;
 
+import Hamburguesas.Producto;
+import Hamburguesas.Ingrediente;
+import Hamburguesas.ProductoMenu;
+
 public class ProductoAjustado {
 	
 	//Métodos

@@ -1,5 +1,8 @@
 package Hamburguesas;
 
+import Hamburguesas.Producto;
+import Hamburguesas.ProductoMenu;
+
 public class Combo {
 	
 	//Atributos
