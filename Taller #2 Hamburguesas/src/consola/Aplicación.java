@@ -1,15 +1,40 @@
 package consola;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 import Hamburguesas.Restaurante;
 
 
 public class Aplicación {
-
-	public void main(String[] args) {
 	
-		ejecutarOpcion();
+	private Restaurante restaurante;
+	//Remplazar ubicación archivo Combos, Ingredientes y Menu
+	private String direccionArchivoIngredientes = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\ingredientes.txt";
+	private String direccionArchivoCombos = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\combos.txt";
+	private String direccionArchivoMenu = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\menu.txt";
+	
+	
+	public static void main(String[] args) throws IOException {
+	
+		Aplicación app = new Aplicación();
+	
+		boolean cont = true;
+		while(cont) {
+			try {
+				app.mostrarMenu();
+				System.out.println("\nIngrese una opcion: ");
+				Scanner op = new Scanner(System.in);
+				int opcion = op.nextInt();
+				app.ejecutarOpcion(opcion);
+				
+			} catch (NumberFormatException e) {
+				System.out.println("\nSeleccione una opción valida");
+				
+				app.Espacio();
+			}
+		}
 		
 	}
 	
@@ -25,50 +50,80 @@ public class Aplicación {
 		
 	}
 	
-	public void ejecutarOpcion(){
+	public void ejecutarOpcion(int opcionSeleccionada) throws IOException{
 		
-		boolean continuar = true;
-		while(continuar)
-		{
-			try 
-			{	
-				mostrarMenu();
-				System.out.println("\nIngrese una opcion: ");
-				Scanner op = new Scanner(System.in);
-				int opcion = op.nextInt();
-				
-				if (opcion == 1) {
+		if (opcionSeleccionada == 1) {
 					
-					System.out.println("\nSe esta cargando el menú...");
+			ejecutarCargarMenu();
+			Espacio();
 					
-				} else if (opcion == 2) {
+		} else if (opcionSeleccionada == 2) {
 					
-					System.out.println("\nSe ha iniciado un nuevo pedido...");
+			ejecutarIniciarPedido();
+			Espacio();
 					
-				} else if (opcion == 3) {
+		} else if (opcionSeleccionada == 3) {
 					
-					System.out.println("\nSe va a agregar un nuevo pedido...");
+			ejecutarAgregarElemento();
+			Espacio();
 					
-				} else if (opcion == 4) {
+		} else if (opcionSeleccionada == 4) {
 					
-					System.out.println("\nSe va a cerrar el pedido...");
+			ejecutarCerrarPedido();
+			Espacio();
 					
-				} else if (opcion == 5) {
+		} else if (opcionSeleccionada == 5) {
 					
-					System.out.println("\nSe va a consultar el pedido...");
-				} else {
-					System.out.println("\nSeleccione una opción valida");
-				}
-				
-			}catch (NumberFormatException e) {
-				
-				System.out.println("\nSeleccione una opción valida");
-				
-			}
-			
+			ejecutarConsultarInformacion();
+			Espacio();
+					
+		} else {
+			System.out.println("\nSeleccione una opción valida");
+					
+			Espacio();
 		}
+				
+			
+	}
 		
+			
+	public void ejecutarCargarMenu() throws IOException {
+		System.out.println("\nCargando el menu..." );
+		File archivoIngredientes = new File(direccionArchivoIngredientes);
+		File archivoMenu = new File(direccionArchivoMenu);
+		File archivoCombo = new File(direccionArchivoCombos);
+		restaurante = Restaurante.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombo);
+	}
+	
+	public void ejecutarIniciarPedido() {
+		System.out.println("\nIniciando nuevo pedido...");
 		
+		System.out.println("\nIngrese un nombre para el pedido: ");
+		Scanner nom = new Scanner(System.in);
+		String nombre = nom.nextLine();
+		System.out.println("\nIngrese una direccion para el pedido: ");
+		Scanner dir = new Scanner(System.in);
+		String direccion = dir.nextLine();
+		
+		restaurante.iniciarPedido(nombre, direccion);
+	}
+	
+	public void ejecutarAgregarElemento() {
+		System.out.println("\nAgregando nuevo elemento...");
+		
+	}
+	
+	public void ejecutarCerrarPedido() {
+		System.out.println("\nCerrando pedido...");
+		
+	}
+	
+	public void ejecutarConsultarInformacion() {
+		System.out.println("\nConsultando información del pedido...");
+	}
+	
+	public void Espacio() {
+		System.out.print("\n");
 	}
 
 }
