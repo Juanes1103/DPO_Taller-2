@@ -16,6 +16,10 @@ import Hamburguesas.Combo;
 
 public class Restaurante {
 	
+	//Atributos
+	private ArrayList<Pedido> pedidos;
+	private Pedido pedidoEnCurso;
+	
 	//Métodos
 	public Restaurante() {
 		
@@ -25,8 +29,6 @@ public class Restaurante {
 		
 		System.out.println("Nombre registrado: " + nombreCliente + "\n");
 		System.out.println("Direcion registrada: " + direccionCliente + "\n");
-		
-		
 		
 		
 	}
@@ -40,6 +42,11 @@ public class Restaurante {
 	}
 	
 	public ArrayList<Producto> getMenuBase(){
+		
+		ArrayList<Producto> aMenu = new ArrayList<Producto>();
+		
+		
+		
 		return null;
 	}
 	
@@ -49,8 +56,6 @@ public class Restaurante {
 	}
 	
 	public static Restaurante cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws IOException {
-		
-		Map<Combo, Double> mCombo = new HashMap<>();
 			
 		System.out.println("\nLista de ingredientes disponibles\n");
 		cargarIngredientes(archivoIngredientes);
@@ -66,7 +71,7 @@ public class Restaurante {
 		
 		Restaurante restaurante = new Restaurante();
 		
-		return null;
+		return restaurante;
 		
 		
 		
@@ -93,7 +98,7 @@ public class Restaurante {
 			System.out.println(ingredientes);
 			ingredientes = arIngredientes.readLine();
 		}
-		
+		System.out.println("\n" + mIngredientes);
 	}
 	
 	private static void cargarMenu(File archivoMenu) throws IOException {
@@ -119,20 +124,36 @@ public class Restaurante {
 			System.out.println(menu);
 			menu = arMenu.readLine();
 		}
-		
+		System.out.println("\n" + mMenu);
 	}
 	
 	private static void cargarCombos(File archivoCombos) throws IOException {
 		
+		Map<String, String> mCombos = new HashMap<>();
+		
 		BufferedReader arCombos = new BufferedReader(new FileReader(archivoCombos));
 		String combos = arCombos.readLine();
 		
-		
 		while(combos != null) {
-			System.out.println(combos);
+			String[] partes = combos.split(";");
+			String nombreCombo = partes[0];
+			String descuentoCombo = partes[1];
+			String productoCombo = partes[2];
+			String tamañoPapasCombo = partes[3];
+			String tamañoBebidaCombo = partes[4];
+			
+			String elCombo = mCombos.get(nombreCombo);
+			if(elCombo == null)
+			{
+				mCombos.put(nombreCombo, descuentoCombo);
+			}
+			
+			
+			System.out.println(nombreCombo + " / descuento: " + descuentoCombo + " / producto: " + productoCombo + " / tamaño papas: " + tamañoPapasCombo + " / tamaño bebida: " + tamañoBebidaCombo);
 			combos = arCombos.readLine();
+			
 		}
-		
+		System.out.println("\n" + mCombos);
 	}
 
 }	

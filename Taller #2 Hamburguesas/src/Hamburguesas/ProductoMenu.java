@@ -11,6 +11,10 @@ public class ProductoMenu {
 	//Métodos
 	public ProductoMenu(String nombre, int precioBase) {
 		
+		this.nombre = nombre;
+		this.precioBase = precioBase;
+		
+		
 	}
 	
 	public String getNombres() {

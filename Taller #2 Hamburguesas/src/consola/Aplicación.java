@@ -93,6 +93,7 @@ public class Aplicación {
 		File archivoMenu = new File(direccionArchivoMenu);
 		File archivoCombo = new File(direccionArchivoCombos);
 		restaurante = Restaurante.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombo);
+		System.out.println(restaurante);
 	}
 	
 	public void ejecutarIniciarPedido() {
@@ -106,10 +107,15 @@ public class Aplicación {
 		String direccion = dir.nextLine();
 		
 		restaurante.iniciarPedido(nombre, direccion);
+		
 	}
 	
 	public void ejecutarAgregarElemento() {
 		System.out.println("\nAgregando nuevo elemento...");
+		
+		System.out.println("\nSeleccione el número del elemento que quiere añadir: ");
+		Scanner opc = new Scanner(System.in);
+		int opcionExtra = opc.nextInt();
 		
 	}
 	
@@ -120,6 +126,10 @@ public class Aplicación {
 	
 	public void ejecutarConsultarInformacion() {
 		System.out.println("\nConsultando información del pedido...");
+		System.out.println("\nIngrese la id del pedido para hacer la consulta: ");
+		Scanner id = new Scanner(System.in);
+		String idPedido = id.nextLine();
+		
 	}
 	
 	public void Espacio() {

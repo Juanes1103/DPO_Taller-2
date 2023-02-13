@@ -10,7 +10,9 @@ public class Combo {
 	private String nombreCombo;
 	
 	//Métodos
-	public Combo(String nombre, double descuento) {
+	public Combo(String nombreCombo, double descuento) {
+		this.nombreCombo = nombreCombo;
+		this.descuento = descuento;
 		
 	}
 	

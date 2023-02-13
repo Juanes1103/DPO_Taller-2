@@ -8,15 +8,17 @@ public class Ingrediente {
 	
 	//Métodos
 	public Ingrediente(String nombre, int costoAdicional) {
+		this.nombre = nombre;
+		this.costoAdicional = costoAdicional;
 		
 	}
 	
 	public String getNombres() {
-		return null;
+		return nombre;
 	}
 	
 	public int getCostoAdicionals() {
-		return 0;
+		return costoAdicional;
 	}
 	
 	//Setters y Getters
