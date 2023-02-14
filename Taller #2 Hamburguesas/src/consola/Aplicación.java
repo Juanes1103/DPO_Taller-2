@@ -92,6 +92,7 @@ public class Aplicación {
 		File archivoIngredientes = new File(direccionArchivoIngredientes);
 		File archivoMenu = new File(direccionArchivoMenu);
 		File archivoCombo = new File(direccionArchivoCombos);
+	    //File archivoBebidas = newFile(direccionArchivoBebidas)
 		restaurante = Restaurante.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombo);
 		System.out.println(restaurante);
 	}
