@@ -14,6 +14,7 @@ public class Aplicación {
 	private String direccionArchivoIngredientes = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\ingredientes.txt";
 	private String direccionArchivoCombos = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\combos.txt";
 	private String direccionArchivoMenu = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\menu.txt";
+	private String direccionArchivoBebidas = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\bebidas.txt";
 	
 	
 	public static void main(String[] args) throws IOException {
@@ -92,7 +93,7 @@ public class Aplicación {
 		File archivoIngredientes = new File(direccionArchivoIngredientes);
 		File archivoMenu = new File(direccionArchivoMenu);
 		File archivoCombo = new File(direccionArchivoCombos);
-	    //File archivoBebidas = newFile(direccionArchivoBebidas)
+	    File archivoBebidas = new File(direccionArchivoBebidas);
 		restaurante = Restaurante.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombo);
 		System.out.println(restaurante);
 	}
@@ -131,6 +132,7 @@ public class Aplicación {
 		System.out.println("\nIngrese la id del pedido para hacer la consulta: ");
 		Scanner id = new Scanner(System.in);
 		String idPedido = id.nextLine();
+		restaurante.getPedidoEnCurso(idPedido);
 		
 	}
 	
