@@ -121,6 +121,7 @@ public class Aplicación {
 	
 	public void ejecutarCerrarPedido() {
 		System.out.println("\nCerrando pedido...");
+		restaurante.cerrarYGuardarPedido();
 		
 	}
 	

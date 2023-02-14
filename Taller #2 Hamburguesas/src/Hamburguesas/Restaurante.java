@@ -27,7 +27,7 @@ public class Restaurante {
 	
 	public void iniciarPedido(String nombreCliente, String direccionCliente) {
 		
-		System.out.println("Nombre registrado: " + nombreCliente + "\n");
+		System.out.println("Nombre registrado: " + nombreCliente + "");
 		System.out.println("Direcion registrada: " + direccionCliente + "\n");
 		
 		
@@ -35,6 +35,8 @@ public class Restaurante {
 	
 	public void cerrarYGuardarPedido() {
 		
+		
+		System.out.println("\nSe ha guardao el pedido!\n");
 	}
 	
 	public Pedido getPedidoEnCurso() {
