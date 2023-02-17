@@ -11,8 +11,12 @@ public class Pedido {
 	private String nombreCliente;
 	private String direccionCliente;
 	
+	private Producto itemsPedido;
+	
 	//Métodos
 	public Pedido(String nombreCliente, String direccionCliente) {
+		this.nombreCliente = nombreCliente;
+		this.direccionCliente = direccionCliente;
 		
 	}
 	

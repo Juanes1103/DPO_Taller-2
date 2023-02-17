@@ -18,11 +18,11 @@ public class ProductoMenu {
 	}
 	
 	public String getNombres() {
-		return null;
+		return nombre;
 	}
 	
 	public int getPrecios() {
-		return 0;
+		return precioBase;
 	}
 	
 	public String generarTextoFactura() {

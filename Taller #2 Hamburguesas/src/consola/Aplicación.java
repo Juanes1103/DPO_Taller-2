@@ -10,12 +10,6 @@ import Hamburguesas.Restaurante;
 public class Aplicación {
 	
 	private Restaurante restaurante;
-	//Remplazar ubicación archivo Combos, Ingredientes y Menu
-	private String direccionArchivoIngredientes = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\ingredientes.txt";
-	private String direccionArchivoCombos = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\combos.txt";
-	private String direccionArchivoMenu = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\menu.txt";
-	private String direccionArchivoBebidas = "C:\\Users\\juane\\git\\DPO_Taller_2\\Taller #2 Hamburguesas\\data\\bebidas.txt";
-	
 	
 	public static void main(String[] args) throws IOException {
 	
@@ -90,10 +84,10 @@ public class Aplicación {
 			
 	public void ejecutarCargarMenu() throws IOException {
 		System.out.println("\nCargando el menu..." );
-		File archivoIngredientes = new File(direccionArchivoIngredientes);
-		File archivoMenu = new File(direccionArchivoMenu);
-		File archivoCombo = new File(direccionArchivoCombos);
-	    File archivoBebidas = new File(direccionArchivoBebidas);
+		File archivoIngredientes = new File("./data/ingredientes.txt");
+		File archivoMenu = new File("./data/menu.txt");
+		File archivoCombo = new File("./data/combos.txt");
+	    File archivoBebidas = new File("./data/bebidas.txt");
 		restaurante = Restaurante.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombo);
 		System.out.println(restaurante);
 	}

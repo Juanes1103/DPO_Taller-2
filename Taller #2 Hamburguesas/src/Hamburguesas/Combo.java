@@ -1,5 +1,7 @@
 package Hamburguesas;
 
+import java.util.ArrayList;
+
 import Hamburguesas.Producto;
 import Hamburguesas.ProductoMenu;
 
@@ -8,6 +10,8 @@ public class Combo {
 	//Atributos
 	private double descuento;
 	private String nombreCombo;
+	
+	private ArrayList<ProductoMenu> itemsCombo;
 	
 	//Métodos
 	public Combo(String nombreCombo, double descuento) {
@@ -29,7 +33,7 @@ public class Combo {
 	}
 	
 	public String getNombre() {
-		return null;
+		return nombreCombo;
 	}
 	//Setters y Getters
 	

@@ -2,7 +2,6 @@ package Hamburguesas;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,13 +17,12 @@ import Hamburguesas.Combo;
 public class Restaurante {
 	
 	//Atributos
-	private ArrayList<Pedido> pedidos;
+	private ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
 	private Pedido pedidoEnCurso;
-	private String nombre;
-	private String direccion;
-	private static ArrayList<String> arregloIngredientes = new ArrayList<String>();
-	private static ArrayList<String> arregloMenu = new ArrayList<String>();
-	private static ArrayList<String> arregloCombos = new ArrayList<String>();
+	private static ArrayList<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
+	private static ArrayList<ProductoMenu> menuBase = new ArrayList<ProductoMenu>();
+	private static ArrayList<Combo> combos = new ArrayList<Combo>();
+	
 	private static ArrayList<String> arregloOrden = new ArrayList<String>();
 	
 	//Métodos
@@ -36,37 +34,38 @@ public class Restaurante {
 		
 		System.out.println("\nNombre registrado: " + nombreCliente);
 		System.out.println("Direcion registrada: " + direccionCliente + "\n");
+		Pedido pedidoEnCurso = new Pedido(nombreCliente, direccionCliente);
+		pedidos.add(pedidoEnCurso);
 		
-		nombre = nombreCliente;
-		direccion = direccionCliente;
+	
 		
 		boolean continuar = true;
 		
 		while(continuar == true) {
 		
-		System.out.println("\n-----------PRODUCTOS-----------\n");
+		System.out.println("-----------PRODUCTOS-----------\n");
 		
 		int k = 0;
 		
-		while (k<arregloMenu.size()){
+		while (k<menuBase.size()){
 			int p = k+1;
 			String imp = p+"";
 			
-			System.out.println(imp + "." + arregloMenu.get(k));
+			System.out.println(imp + "." + menuBase.get(k).getNombre());
 			k++;
 			
 		}
 		
 		System.out.println("\n------------COMBOS------------\n");
-		int j = arregloMenu.size();
+		int j = menuBase.size();
 		int i = 0;
 		
-		while (i<arregloCombos.size()){
+		while (i<combos.size()){
 			int p = j+1;
 			String imp = p+"";
 			
 			
-			System.out.println(imp + "." + arregloCombos.get(i));
+			System.out.println(imp + "." + combos.get(i).getNombre());
 			i++;
 			j++;
 			
@@ -78,16 +77,16 @@ public class Restaurante {
 		
 		if(opcion < 23) {
 			
-			String elemento = arregloMenu.get(opcion-1);
-			arregloOrden.add(elemento);
+			ProductoMenu elemento = menuBase.get(opcion-1);
+			arregloOrden.add(elemento.getNombre());
 			
-			System.out.println("Se ha agregado " + elemento + " a la orden!\n");
+			System.out.println("Se ha agregado " + elemento.getNombre() + " a la orden!\n");
 			
 		}else {
-			String elemento = arregloCombos.get((opcion-arregloMenu.size())-1);
-			arregloOrden.add(elemento);
+			Combo elemento = combos.get((opcion-menuBase.size())-1);
+			arregloOrden.add(elemento.getNombre());
 			
-			System.out.println("Se ha agregado " + elemento + " a la orden!\n");
+			System.out.println("Se ha agregado " + elemento.getNombre() + " a la orden!\n");
 		}
 		
 		
@@ -111,16 +110,32 @@ public class Restaurante {
 		if (num == 1) {
 			continuar = true;
 		} else {
-			continuar = false;
-		}
-				
+			if (arregloOrden.size() == 0) {
+				System.out.println("\nDebe agregar por lo menos un producto a su orden!");
+				continuar = true;
+			}else {
+				continuar = false;
+			}
+			
+		}	
 		
 		}
 		
+		System.out.println("\n--------RESUMEN DEL PEDIDO--------\n");
+		
+		int y = 0;
+		
+		while (y<arregloOrden.size()) {
+			System.out.println("+" + arregloOrden.get(y));
+			
+			y++;
+		}
+		
+		System.out.println("\n--------------------------------------");
 		
 	}
 	
-	private int parseInt(String opcion) {
+	private static int parseInt(String opcion) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -128,7 +143,7 @@ public class Restaurante {
 	public void cerrarYGuardarPedido() {
 		
 		
-		System.out.println("\nSe ha guardao el pedido!\n");
+		System.out.println("\nSe ha guardado el pedido!\n");
 	}
 	
 	public Pedido getPedidoEnCurso(String idPedido) {
@@ -136,10 +151,13 @@ public class Restaurante {
 		System.out.println("\nBuscando la información del pedido " + idPedido);
 		System.out.println("\nSe ha encontrado la siguiente información");
 		
+		Pedido orden = pedidos.get(0);
+		
+		
 		System.out.println("---------------");
 		System.out.println("Id: " + idPedido);
-		System.out.println("\nNombre: " + nombre);
-		System.out.println("\nDirección: " + direccion);
+		System.out.println("\nNombre: " + orden.getNombreCliente());
+		System.out.println("\nDirección: " + orden.getDireccionCliente());
 		System.out.println("---------------");
 		System.out.println("Descripción: ");
 		System.out.println("\nEstado: ");
@@ -149,7 +167,7 @@ public class Restaurante {
 		return null;
 	}
 	
-	public ArrayList<Producto> getMenuBase(){
+	public static ArrayList<Producto> getMenuBase(){
 		
 		ArrayList<Producto> aMenu = new ArrayList<Producto>();
 		
@@ -188,37 +206,29 @@ public class Restaurante {
 	
 	private static void cargarIngredientes(File archivoIngredientes) throws IOException {
 		
-		ArrayList<Ingrediente> aIngredientes = getIngredientes();
-		
-		Map<String, String> mIngredientes = new HashMap<>();
-		
-		BufferedReader arIngredientes = new BufferedReader(new FileReader(archivoIngredientes));
-		String ingredientes = arIngredientes.readLine();
-		while(ingredientes != null) {
-			String[] partes = ingredientes.split(";");
+		BufferedReader arIngredientes;
+		arIngredientes = new BufferedReader(new FileReader(archivoIngredientes));
+		String ingrediente = arIngredientes.readLine();
+		while(ingrediente != null) {
+			String[] partes = ingrediente.split(";");
 			String nombreIngrediente = partes[0];
 			String valorIngrediente = partes[1];
+			int valor = parseInt(valorIngrediente);
+			Ingrediente nuevo = new Ingrediente(nombreIngrediente, valor);
 			
+			ingredientes.add(nuevo);
+				
 			//int costoAdicional = (int)valorIngrediente;
-			
-			String elIngrediente = mIngredientes.get(nombreIngrediente);
-			if(elIngrediente == null)
-			{
-				mIngredientes.put(nombreIngrediente, valorIngrediente);
-			//	Ingrediente nIngrediente = Ingrediente.Ingrediente(nombreIngrediente, );
-				arregloIngredientes.add(nombreIngrediente);
-			}
-			
-			ingredientes = ingredientes.replace(";", " / valor: ");
-			System.out.println(ingredientes);
-			ingredientes = arIngredientes.readLine();
+				
+			ingrediente = ingrediente.replace(";", " / valor: ");
+			System.out.println(ingrediente);
+			ingrediente = arIngredientes.readLine();
 		}
-		System.out.println("\n" + mIngredientes);
+		arIngredientes.close();
+
 	}
 	
 	private static void cargarMenu(File archivoMenu) throws IOException {
-		
-		Map<String, String> mMenu = new HashMap<>();
 		
 		BufferedReader arMenu = new BufferedReader(new FileReader(archivoMenu));
 		String menu = arMenu.readLine();
@@ -227,50 +237,41 @@ public class Restaurante {
 			String[] partes = menu.split(";");
 			String nombreProducto = partes[0];
 			String valorProducto = partes[1];
+			int valor = parseInt(valorProducto);
+			ProductoMenu nuevo = new ProductoMenu(nombreProducto, valor);
 			
-			String elProducto = mMenu.get(nombreProducto);
-			if(elProducto == null)
-			{
-				mMenu.put(nombreProducto, valorProducto);
-				arregloMenu.add(nombreProducto);
-			}
-			
+			menuBase.add(nuevo);
 			
 			menu = menu.replace(";", " / valor: ");
 			System.out.println(menu);
 			menu = arMenu.readLine();
 		}
-		System.out.println("\n" + mMenu);
+		arMenu.close();
 	}
 	
 	private static void cargarCombos(File archivoCombos) throws IOException {
 		
-		Map<String, String> mCombos = new HashMap<>();
-		
 		BufferedReader arCombos = new BufferedReader(new FileReader(archivoCombos));
-		String combos = arCombos.readLine();
+		String combo = arCombos.readLine();
 		
-		while(combos != null) {
-			String[] partes = combos.split(";");
+		while(combo != null) {
+			String[] partes = combo.split(";");
 			String nombreCombo = partes[0];
 			String descuentoCombo = partes[1];
 			String productoCombo = partes[2];
 			String tamañoPapasCombo = partes[3];
 			String tamañoBebidaCombo = partes[4];
 			
-			String elCombo = mCombos.get(nombreCombo);
-			if(elCombo == null)
-			{
-				mCombos.put(nombreCombo, descuentoCombo);
-				arregloCombos.add(nombreCombo);
-			}
+			int descuento = parseInt(descuentoCombo);
 			
+			Combo nuevo = new Combo(nombreCombo, descuento);
+			combos.add(nuevo);
 			
 			System.out.println(nombreCombo + " / descuento: " + descuentoCombo + " / producto: " + productoCombo + " / tamaño papas: " + tamañoPapasCombo + " / tamaño bebida: " + tamañoBebidaCombo);
-			combos = arCombos.readLine();
+			combo = arCombos.readLine();
 			
 		}
-		System.out.println("\n" + mCombos);
+		arCombos.close();
 	}
 
 }	
