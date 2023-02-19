@@ -24,6 +24,8 @@ public class Restaurante {
 	private static ArrayList<Combo> combos = new ArrayList<Combo>();
 	
 	private static ArrayList<String> arregloOrden = new ArrayList<String>();
+	private static ArrayList<Ingrediente> agregados = new ArrayList<Ingrediente>();
+	private static ArrayList<Ingrediente> eliminados = new ArrayList<Ingrediente>();
 	
 	//Métodos
 	public Restaurante() {
@@ -40,6 +42,8 @@ public class Restaurante {
 	
 		
 		boolean continuar = true;
+		
+		int valorNeto = 0;
 		
 		while(continuar == true) {
 		
@@ -80,7 +84,8 @@ public class Restaurante {
 			ProductoMenu elemento = menuBase.get(opcion-1);
 			arregloOrden.add(elemento.getNombre());
 			
-			System.out.println("Se ha agregado " + elemento.getNombre() + " a la orden!\n");
+			System.out.println("Se ha agregado " + elemento.getNombre() + ", por un precio de " + elemento.getPrecioBase()+ " a la orden!\n");
+			valorNeto += elemento.getPrecioBase();
 			
 		}else {
 			Combo elemento = combos.get((opcion-menuBase.size())-1);
@@ -101,7 +106,7 @@ public class Restaurante {
 			x++;
 		}
 		
-		System.out.println("\n¿Desea agregar algo más a su pedido?");
+		System.out.println("\nDesea agregar algo más a su pedido?");
 		System.out.println("1. Sí");
 		System.out.println("0. No");
 		Scanner decision = new Scanner(System.in);
@@ -121,7 +126,7 @@ public class Restaurante {
 		
 		}
 		
-		System.out.println("\n--------RESUMEN DEL PEDIDO--------\n");
+		System.out.println("\n--------RESUMEN_DEL_PEDIDO--------\n");
 		
 		int y = 0;
 		
@@ -130,9 +135,82 @@ public class Restaurante {
 			
 			y++;
 		}
+		System.out.println("\nTotal de elementos: " + arregloOrden.size());
+		System.out.println("\nValor neto pedido: " + valorNeto);
 		
 		System.out.println("\n--------------------------------------");
 		
+	}
+	
+	public void agregarElementoPedido() {
+		
+		boolean continuar = true;
+		int valorIngredientes = 0;
+		
+		while (continuar == true) {
+			System.out.println("\n----------------INGREDIENTES----------------\n");
+			
+			int i = 0;
+		
+			while (i<ingredientes.size()) {
+			
+				Ingrediente ing = ingredientes.get(i);
+			
+				System.out.println((i+1) + ". " + ing.getNombre());
+			
+				i++;
+			}
+		
+			System.out.println("\nSeleccione el número del ingrediente que quiere añadir: ");
+		
+			Scanner opc = new Scanner(System.in);
+			int opcionExtra = opc.nextInt();
+		
+			Ingrediente ingrediente = ingredientes.get(opcionExtra-1);
+			agregados.add(ingrediente);
+			System.out.println("\nSe ha añadido " + ingrediente.getNombre() + ", por un costo de " + ingrediente.getCostoAdicionals());
+			valorIngredientes += ingrediente.getCostoAdicionals();
+			
+			
+			System.out.println("\nIngredientes adicionados:");
+			
+			int j = 0;
+			
+			while(j<agregados.size()) {
+				System.out.println((j+1) + ". " + agregados.get(j).getNombre());
+				
+				j++;
+				
+			}
+			
+			System.out.println("\nDesea agregar otro ingrediente?");
+			System.out.println("1. Si");
+			System.out.println("0. No");
+			
+			Scanner opcion = new Scanner(System.in);
+			int op = opcion.nextInt();
+			
+			if (op == 1) {
+				continuar = true;
+			} else {
+				continuar = false;
+			}
+			
+		}
+		
+		System.out.println("\n-----------------INGREDIENTES_AÑADIDOS-----------------");
+		
+		int k = 0;
+		
+		while (k<agregados.size()) {
+			System.out.println("+" + agregados.get(k).getNombre());
+			k++;
+		}
+		System.out.println("\nTotal de elementos: " + agregados.size());
+		System.out.println("\nValor ingredientes: " + valorIngredientes);
+		
+		
+		System.out.println("---------------------------------------------------------");
 	}
 	
 	private static int parseInt(String opcion) {
@@ -154,14 +232,36 @@ public class Restaurante {
 		Pedido orden = pedidos.get(0);
 		
 		
-		System.out.println("---------------");
+		System.out.println("\n-------------------------------------------");
 		System.out.println("Id: " + idPedido);
 		System.out.println("\nNombre: " + orden.getNombreCliente());
 		System.out.println("\nDirección: " + orden.getDireccionCliente());
-		System.out.println("---------------");
-		System.out.println("Descripción: ");
+		System.out.println("\nDescripción: ");
+		
+		System.out.println("Total de productos: " + (arregloOrden.size() + agregados.size()));
+		
+		System.out.println("\n-----------------ELEMENTOS-----------------");
+		
+		int i  = 0;
+		
+		while(i<arregloOrden.size()) {
+			System.out.println("+" + arregloOrden.get(i));
+			i++;
+		}
+		
+		System.out.println("\n-----------ELEMENTOS_ADICIONALES-----------");
+		
+		int j  = 0;
+		
+		while(j<agregados.size()) {
+			System.out.println("+" + agregados.get(j).getNombre());
+			j++;
+		}
+		
+		
+		System.out.println("\n-------------------------------------------");
 		System.out.println("\nEstado: ");
-		System.out.println("---------------");
+		System.out.println("-------------------------------------------");
 	
 		
 		return null;

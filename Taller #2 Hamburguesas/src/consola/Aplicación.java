@@ -22,6 +22,11 @@ public class Aplicación {
 				System.out.println("\nIngrese una opcion: ");
 				Scanner op = new Scanner(System.in);
 				int opcion = op.nextInt();
+				
+				if (opcion == 6) {
+					cont = false;
+					System.out.println("\nGracias por utilizar el menu!");
+				}
 				app.ejecutarOpcion(opcion);
 				
 			} catch (NumberFormatException e) {
@@ -42,6 +47,7 @@ public class Aplicación {
 		System.out.println("3. Agregar un elemento a un pedido");
 		System.out.println("4. Cerra pedido y guardar factura");
 		System.out.println("5. Consultar la información de un pedido dada su id");
+		System.out.println("6. Salir del menu");
 		
 	}
 	
@@ -72,6 +78,9 @@ public class Aplicación {
 			ejecutarConsultarInformacion();
 			Espacio();
 					
+		} else if (opcionSeleccionada == 6){
+			Espacio();
+			
 		} else {
 			System.out.println("\nSeleccione una opción valida");
 					
@@ -109,9 +118,7 @@ public class Aplicación {
 	public void ejecutarAgregarElemento() {
 		System.out.println("\nAgregando nuevo elemento...");
 		
-		System.out.println("\nSeleccione el número del elemento que quiere añadir: ");
-		Scanner opc = new Scanner(System.in);
-		int opcionExtra = opc.nextInt();
+		restaurante.agregarElementoPedido();
 		
 	}
 	
