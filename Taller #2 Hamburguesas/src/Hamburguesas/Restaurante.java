@@ -3,11 +3,14 @@ package Hamburguesas;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.random.*;
 
 import Hamburguesas.Ingrediente;
 import Hamburguesas.ProductoMenu;
@@ -22,6 +25,7 @@ public class Restaurante {
 	private static ArrayList<Ingrediente> ingredientes = new ArrayList<Ingrediente>();
 	private static ArrayList<ProductoMenu> menuBase = new ArrayList<ProductoMenu>();
 	private static ArrayList<Combo> combos = new ArrayList<Combo>();
+	private static HashMap<Integer, ArrayList<String>> factura = new HashMap<Integer, ArrayList<String>>();
 	
 	private static ArrayList<String> arregloOrden = new ArrayList<String>();
 	private static ArrayList<Ingrediente> agregados = new ArrayList<Ingrediente>();
@@ -218,19 +222,76 @@ public class Restaurante {
 		return 0;
 	}
 
-	public void cerrarYGuardarPedido() {
+	public void cerrarYGuardarPedido(){
+		
+		Random rand = new Random();
+		int id = rand.nextInt(9999);
+		Integer ID = Integer.valueOf(id);
+		
+		ArrayList<String> pedido = new ArrayList<String>();
+		
+		int i = 0;
+		while(i<arregloOrden.size()) {
+			pedido.add(arregloOrden.get(i));
+			i++;
+		}
+		
+		int j = 0;
+		while(j<agregados.size()) {
+			pedido.add(agregados.get(j).getNombre());
+			j++;
+		}
+		
+		ArrayList<String> el = factura.get(ID);
+		
+		if(el == null) {
+			factura.put(ID, pedido);
+		}
+		
+		FileWriter facturaPedido;
+		try {
+			facturaPedido = new FileWriter("./data/factura.txt");
 		
 		
-		System.out.println("\nSe ha guardado el pedido!\n");
+			facturaPedido.write("Id del pedido: " + ID);
+			facturaPedido.write("");
+			facturaPedido.write("ELEMENTOS DEL PEDIDO:");
+		
+			int k = 0;
+			while(k<pedido.size()) {
+			
+				facturaPedido.write(pedido.get(i));
+			
+				k++;
+		}
+		
+		
+		facturaPedido.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("\nId del pedido: " + ID);
+		
+		System.out.println("\nSe ha guardado el pedido!");
 	}
 	
 	public Pedido getPedidoEnCurso(String idPedido) {
 		
 		System.out.println("\nBuscando la información del pedido " + idPedido);
-		System.out.println("\nSe ha encontrado la siguiente información");
 		
 		Pedido orden = pedidos.get(0);
 		
+		int id = parseInt(idPedido);
+		Integer ID = Integer.valueOf(id);
+	
+		ArrayList<String> ele = factura.get(ID);
+		
+		if (ele != null) {
+			System.out.println("\nNo existe un pedido con el Id " + idPedido);
+		} else {
+			System.out.println("\nSe ha encontrado la siguiente información");
 		
 		System.out.println("\n-------------------------------------------");
 		System.out.println("Id: " + idPedido);
@@ -239,8 +300,9 @@ public class Restaurante {
 		System.out.println("\nDescripción: ");
 		
 		System.out.println("Total de productos: " + (arregloOrden.size() + agregados.size()));
+		System.out.println("\n-------------------------------------------");
 		
-		System.out.println("\n-----------------ELEMENTOS-----------------");
+		System.out.println("\n                 ELEMENTOS                 ");
 		
 		int i  = 0;
 		
@@ -249,7 +311,7 @@ public class Restaurante {
 			i++;
 		}
 		
-		System.out.println("\n-----------ELEMENTOS_ADICIONALES-----------");
+		System.out.println("\n           ELEMENTOS_ADICIONALES           ");
 		
 		int j  = 0;
 		
@@ -263,7 +325,7 @@ public class Restaurante {
 		System.out.println("\nEstado: ");
 		System.out.println("-------------------------------------------");
 	
-		
+		}
 		return null;
 	}
 	
